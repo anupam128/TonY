@@ -936,8 +936,8 @@ public class TonyApplicationMaster {
     Resource capability = Resource.newInstance(request.getMemory(), request.getVCores());
     Utils.setCapabilityGPU(capability, request.getGPU());
     session.addAllocationId(request.getJobName(), lastAllocationRequestId);
-    AMRMClient.ContainerRequest containerRequest = new AMRMClient.ContainerRequest(capability, null, null, priority,
-        lastAllocationRequestId++);
+    AMRMClient.ContainerRequest containerRequest = new AMRMClient.ContainerRequest(capability, null, null, priority/*,
+        lastAllocationRequestId++*/);
     LOG.info("Requested container ask: " + containerRequest.toString());
     return containerRequest;
   }
@@ -983,14 +983,14 @@ public class TonyApplicationMaster {
     @Override
     public void onContainerResourceIncreased(ContainerId containerId, Resource resource) { }
 
-    @Override
-    public void onContainerResourceUpdated(ContainerId containerId, Resource resource) { }
+    /*@Override
+    public void onContainerResourceUpdated(ContainerId containerId, Resource resource) { }*/
 
     @Override
     public void onIncreaseContainerResourceError(ContainerId containerId, Throwable t) { }
 
-    @Override
-    public void onUpdateContainerResourceError(ContainerId containerId, Throwable t) { }
+    /*@Override
+    public void onUpdateContainerResourceError(ContainerId containerId, Throwable t) { }*/
 
   }
 
@@ -1089,7 +1089,10 @@ public class TonyApplicationMaster {
       containerEnv.put(Constants.SESSION_ID, String.valueOf(session.sessionId));
       Map<String, String> containerShellEnv = new ConcurrentHashMap<>(containerEnv);
 
-      TonyTask task = session.getAndInitMatchingTask(container.getAllocationRequestId());
+      TonyTask task = session.getAndInitMatchingTask(/*container.getAllocationRequestId()
+        ********************* THIS NEEDS LOGIC CHANGE ********************/
+        0
+      );
 
       Preconditions.checkNotNull(task, "Task was null! Nothing to schedule.");
 

@@ -56,8 +56,6 @@ import org.apache.hadoop.yarn.api.records.Resource;
 import org.apache.hadoop.yarn.conf.YarnConfiguration;
 import org.apache.hadoop.yarn.util.ConverterUtils;
 
-import static org.apache.hadoop.yarn.api.records.ResourceInformation.*;
-
 
 public class Utils {
   private static final Log LOG = LogFactory.getLog(Utils.class);
@@ -165,11 +163,7 @@ public class Utils {
   }
 
   public static void setCapabilityGPU(Resource resource, int gpuCount) {
-    // short-circuit when the GPU count is 0.
-    if (gpuCount <= 0) {
-      return;
-    }
-    resource.setResourceValue(GPU_URI, gpuCount);
+    throw new UnsupportedOperationException("Gpu capability not available in this Hadoop version");
   }
 
   public static String constructContainerUrl(Container container) {

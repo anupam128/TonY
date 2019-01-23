@@ -80,7 +80,7 @@ public class ApplicationRpcClient implements ApplicationRpc {
     RetryPolicy retryPolicy;
     try {
       // Hadoop 2.9+ method
-      retryPolicy = RMProxy.createRetryPolicy(conf, false);
+      retryPolicy = RMProxy.createRetryPolicy(conf); // isHAEnabled does not exist
     } catch (NoSuchMethodError nsme) {
       // Hadoop 2.7 method
       try {
